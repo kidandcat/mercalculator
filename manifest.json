@@ -1,0 +1,8 @@
+{
+    "name": "Mercalculator",
+    "short_name": "Mercalculator",
+    "background_color": "#fff",
+    "description": "Mercalculator",
+    "display": "standalone",
+    "orientation": "portrait"
+}

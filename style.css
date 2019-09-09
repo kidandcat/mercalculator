@@ -1,0 +1,27 @@
+body{
+    margin: 0;
+}
+#interactive video {
+    width: 100vw;
+    height: 100vw;
+}
+#interactive canvas {
+    width: 100vw;
+    height: 100vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+}
+#total {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#list {
+    display: flex;
+    flex-direction: column;
+}
+.item .price {
+    display: inline-block;
+    margin-left: 5px;
+}
