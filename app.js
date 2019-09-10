@@ -16,7 +16,7 @@ const config = {
     patchSize: "x-large",
   },
   locate: true,
-  frequency: 10,
+  frequency: 30,
   numOfWorkers: navigator.hardwareConcurrency
 }
 
