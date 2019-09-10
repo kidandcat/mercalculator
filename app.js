@@ -74,8 +74,8 @@ Quagga.onDetected(async r => {
 let totalPrice = 0
 function addItem(name, price) {
   const item = document.createElement('div')
-  item.class = 'item'
-  item.innerHTML = `<span class="name">${name}</span><span class="price">${price}</span>`
+  item.classList.add('item')
+  item.innerHTML = `<span class="name">${name}</span><span class="price">${price}€</span>`
   document.querySelector('#list').appendChild(item)
   totalPrice = parseFloat(totalPrice) + parseFloat(price)
   document.querySelector('#total').innerHTML = totalPrice
