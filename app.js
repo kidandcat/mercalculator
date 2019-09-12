@@ -98,7 +98,8 @@ function deleteItem(id) {
   let items = localStorage.getItem('list')
   if (items) {
     items = JSON.parse(items)
-    items = items.filter(i => i.id != id)
+    toR = items.find(i => i.id == id)
+    delete items[items.indexOf(toR)]
     localStorage.setItem('list', JSON.stringify(items))
     document.querySelector('#list').innerHTML = ''
     loadItems()
