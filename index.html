@@ -12,11 +12,16 @@
 </head>
 <body>
     <div id="interactive" class="viewport"></div>
-    <div id="info">
-        <div id="total">0</div>
-        <div class="euro">€</div>
+    <div id="content">
+        <div id="info">
+            <div class="delete center" onclick="removeItems()">X</div>
+            <div class="text center">
+                <div id="total">0</div>
+                <div class="euro">€</div>
+            </div>
+        </div>
+        <div id="list"></div>
     </div>
-    <div id="list"></div>
     <script src="app.js?q=random"></script>
 </body>
 </html>

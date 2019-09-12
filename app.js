@@ -16,7 +16,7 @@ const config = {
     patchSize: "x-large",
   },
   locate: true,
-  frequency: 30,
+  frequency: 10,
   numOfWorkers: navigator.hardwareConcurrency
 }
 
@@ -54,14 +54,12 @@ Quagga.onProcessed(result => {
 
 let queried = false
 Quagga.onDetected(async r => {
-  if (queried) {
-    return
-  }
+  if (queried) return
+  queried = true
   try {
-    queried = true
     const res = await fetch(`/api/mercadona?id=${parseInt(r.codeResult.code.substring(7, 12))}`)
     const data = await res.json()
-    addItem(data.display_name, data.price_instructions.unit_price)
+    addItem(data.id, data.display_name, data.price_instructions.unit_price, true)
     setTimeout(() => {
       queried = false
     }, 3000)
@@ -72,11 +70,55 @@ Quagga.onDetected(async r => {
 })
 
 let totalPrice = 0
-function addItem(name, price) {
+function addItem(id, name, price, save) {
   const item = document.createElement('div')
   item.classList.add('item')
-  item.innerHTML = `<span class="name">${name}</span><span class="price">${price}€</span>`
+  item.innerHTML = `
+  <button onClick="deleteItem(${id})" class="delete">X</button>
+  <span class="name">${name}</span>
+  <span class="price">${price}€</span>`
   document.querySelector('#list').appendChild(item)
   totalPrice = parseFloat(totalPrice) + parseFloat(price)
   document.querySelector('#total').innerHTML = totalPrice
+  if (save) saveItem({ id, name, price })
 }
+
+function saveItem(item) {
+  let items = localStorage.getItem('list')
+  if (items){
+    items = JSON.parse(items)
+  }else{
+    items = []
+  } 
+  items.push(item)
+  localStorage.setItem('list', JSON.stringify(items))
+}
+
+function deleteItem(id) {
+  let items = localStorage.getItem('list')
+  if (items) {
+    items = JSON.parse(items)
+    items = items.filter(i => i.id != id)
+    localStorage.setItem('list', JSON.stringify(items))
+    document.querySelector('#list').innerHTML = ''
+    loadItems()
+  }
+}
+
+function removeItems() {
+  localStorage.clear()
+  document.querySelector('#total').innerHTML = 0
+  document.querySelector('#list').innerHTML = ''
+}
+
+function loadItems() {
+  let items = localStorage.getItem('list')
+  if (items) {
+    items = JSON.parse(items)
+    for (let i of items) {
+      addItem(i.id, i.name, i.price, false)
+    }
+  }
+}
+
+loadItems()
